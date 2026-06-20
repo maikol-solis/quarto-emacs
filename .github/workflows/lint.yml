@@ -45,7 +45,7 @@ jobs:
         run: |
           cask emacs -Q --batch \
             --eval '(checkdoc-file "quarto-mode.el")' 2>&1 \
-            | grep "^quarto-mode\.el" | tee checkdoc.log
+            | grep "^quarto-mode\.el" | tee checkdoc.log || true
           test ! -s checkdoc.log
 
       # Advisory: package-lint is informational. The lone remaining finding is
