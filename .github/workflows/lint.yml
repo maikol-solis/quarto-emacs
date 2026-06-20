@@ -39,10 +39,13 @@ jobs:
 
       # Hard gate: the source is checkdoc-clean. Any new docstring warning
       # produces output and fails the job.
+      # Filter to lines from quarto-mode.el itself; Cask's own files emit
+      # deprecation noise on snapshot Emacs (>= 31.1) that must be ignored.
       - name: checkdoc
         run: |
           cask emacs -Q --batch \
-            --eval '(checkdoc-file "quarto-mode.el")' 2>&1 | tee checkdoc.log
+            --eval '(checkdoc-file "quarto-mode.el")' 2>&1 \
+            | grep "^quarto-mode\.el" | tee checkdoc.log
           test ! -s checkdoc.log
 
       # Advisory: package-lint is informational. The lone remaining finding is
