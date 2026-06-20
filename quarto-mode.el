@@ -341,7 +341,10 @@ Ensure quarto has rendered NAME (necessary if in a project).  If not in a projec
     (setq-local polymode-eval-region-function
                 #'quarto-mode--eval-python-region)))
 
-(add-hook 'python-mode-hook #'quarto-mode--python-mode-hook)
+(with-eval-after-load 'python
+  (add-hook 'python-mode-hook #'quarto-mode--python-mode-hook)
+  (when (boundp 'python-ts-mode-hook)
+    (add-hook 'python-ts-mode-hook #'quarto-mode--python-mode-hook)))
 
 ;;; Advice functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
