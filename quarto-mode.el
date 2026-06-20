@@ -329,6 +329,8 @@ Ensure quarto has rendered NAME (necessary if in a project).  If not in a projec
 
 ;;; Python evaluation ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(declare-function python-shell-send-region "python" (beg end &optional send-main msg))
+
 (defun quarto-mode--eval-python-region (beg end _msg)
   "Send Python region from BEG to END to the inferior Python process."
   (python-shell-send-region beg end))
