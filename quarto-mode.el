@@ -327,7 +327,21 @@ Ensure quarto has rendered NAME (necessary if in a project).  If not in a projec
 
 (add-hook 'poly-quarto-mode-hook #'quarto-mode-default-hook)
 
-;;; Advice functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Python evaluation ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun quarto-mode--eval-python-region (beg end msg)
+  "Send Python region from BEG to END to the inferior Python process.
+MSG is currently unused."
+  (python-shell-send-region beg end))
+
+(defun quarto-mode--python-mode-hook ()
+  "Set up Python code evaluation in polymode chunks."
+  (setq-local polymode-eval-region-function
+              #'quarto-mode--eval-python-region))
+
+(add-hook 'python-mode-hook #'quarto-mode--python-mode-hook)
+
+;;; Advice functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun quarto-mode--is-block-p ()
   "Return non-nil if thing at point is a quarto block."
